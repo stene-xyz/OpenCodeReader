@@ -18,6 +18,7 @@
 
 using System;
 using System.IO.Ports;
+using System.Text;
 using System.Windows.Forms;
 
 namespace OpenCodeReader
@@ -37,6 +38,24 @@ namespace OpenCodeReader
             else return 9600;
         }
 
+        private void writeToLog(String message)
+        {
+            LogView.Items.Add(message);
+            LogView.TopIndex = LogView.Items.Count - 1;
+        }
+
+        private void writeToTerminal(String message)
+        {
+            TerminalView.Items.Add(message);
+            TerminalView.TopIndex = TerminalView.Items.Count - 1;
+        }
+
+        private void writeToPort(String message)
+        {
+            port.WriteLine(message);
+            port.ReadLine(); // get rid of echo
+        }
+
         private void Baudrate9600_CheckedChanged(object sender, EventArgs e)
         {
             if (Baudrate9600.Checked) Baudrate38400.Checked = false;
@@ -51,12 +70,19 @@ namespace OpenCodeReader
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
+            writeToLog("Connecting to COM port " + PortID.Text + "...");
             port = new SerialPort(PortID.Text, getBaudRate(), Parity.None, 8, StopBits.One);
             port.Open();
+            port.NewLine = "\r"; // The ELM327 uses carriage return, not newline
+
+            // Get version
+            writeToPort("ati");
+            writeToLog("Connected to: " + port.ReadLine());
         }
 
         private void DisconnectButton_Click(object sender, EventArgs e)
         {
+            writeToLog("Disconnecting from COM port.");
             port.Close();
             port = null;
         }
@@ -65,6 +91,13 @@ namespace OpenCodeReader
         {
             AboutBox1 aboutBox1 = new AboutBox1();
             aboutBox1.Show();
+        }
+
+        private void TerminalSend_Click(object sender, EventArgs e)
+        {
+            writeToPort(TerminalInput.Text);
+            port.ReadLine(); // Throw out garbage
+            writeToTerminal(port.ReadLine());
         }
     }
 }
