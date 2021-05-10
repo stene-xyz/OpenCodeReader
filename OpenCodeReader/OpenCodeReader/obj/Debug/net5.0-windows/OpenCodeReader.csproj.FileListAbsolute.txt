@@ -1,0 +1,7 @@
+C:\Users\Johnny\Documents\GitHub\OpenCodeReader\OpenCodeReader\OpenCodeReader\obj\Debug\net5.0-windows\OpenCodeReader.csprojAssemblyReference.cache
+C:\Users\Johnny\Documents\GitHub\OpenCodeReader\OpenCodeReader\OpenCodeReader\obj\Debug\net5.0-windows\OpenCodeReader.Form1.resources
+C:\Users\Johnny\Documents\GitHub\OpenCodeReader\OpenCodeReader\OpenCodeReader\obj\Debug\net5.0-windows\OpenCodeReader.csproj.GenerateResource.cache
+C:\Users\Johnny\Documents\GitHub\OpenCodeReader\OpenCodeReader\OpenCodeReader\obj\Debug\net5.0-windows\OpenCodeReader.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Johnny\Documents\GitHub\OpenCodeReader\OpenCodeReader\OpenCodeReader\obj\Debug\net5.0-windows\OpenCodeReader.AssemblyInfoInputs.cache
+C:\Users\Johnny\Documents\GitHub\OpenCodeReader\OpenCodeReader\OpenCodeReader\obj\Debug\net5.0-windows\OpenCodeReader.AssemblyInfo.cs
+C:\Users\Johnny\Documents\GitHub\OpenCodeReader\OpenCodeReader\OpenCodeReader\obj\Debug\net5.0-windows\OpenCodeReader.csproj.CoreCompileInputs.cache
