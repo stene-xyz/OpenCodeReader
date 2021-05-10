@@ -42,5 +42,10 @@ namespace OpenCodeReader
             port.Close();
             port = null;
         }
+
+        private void AboutButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

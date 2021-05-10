@@ -44,11 +44,12 @@ namespace OpenCodeReader
             this.Baudrate9600 = new System.Windows.Forms.RadioButton();
             this.Baudrate38400 = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
+            this.AboutButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ConnectButton
             // 
-            this.ConnectButton.Location = new System.Drawing.Point(117, 27);
+            this.ConnectButton.Location = new System.Drawing.Point(115, 27);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(75, 23);
             this.ConnectButton.TabIndex = 0;
@@ -58,7 +59,7 @@ namespace OpenCodeReader
             // 
             // DisconnectButton
             // 
-            this.DisconnectButton.Location = new System.Drawing.Point(198, 27);
+            this.DisconnectButton.Location = new System.Drawing.Point(196, 27);
             this.DisconnectButton.Name = "DisconnectButton";
             this.DisconnectButton.Size = new System.Drawing.Size(75, 23);
             this.DisconnectButton.TabIndex = 1;
@@ -68,7 +69,7 @@ namespace OpenCodeReader
             // 
             // PortID
             // 
-            this.PortID.Location = new System.Drawing.Point(11, 27);
+            this.PortID.Location = new System.Drawing.Point(9, 27);
             this.PortID.Name = "PortID";
             this.PortID.Size = new System.Drawing.Size(100, 23);
             this.PortID.TabIndex = 2;
@@ -103,7 +104,7 @@ namespace OpenCodeReader
             // 
             // ScanABS
             // 
-            this.ScanABS.Location = new System.Drawing.Point(178, 201);
+            this.ScanABS.Location = new System.Drawing.Point(179, 201);
             this.ScanABS.Name = "ScanABS";
             this.ScanABS.Size = new System.Drawing.Size(93, 23);
             this.ScanABS.TabIndex = 7;
@@ -157,7 +158,7 @@ namespace OpenCodeReader
             // 
             this.Baudrate9600.AutoSize = true;
             this.Baudrate9600.Checked = true;
-            this.Baudrate9600.Location = new System.Drawing.Point(163, 51);
+            this.Baudrate9600.Location = new System.Drawing.Point(161, 51);
             this.Baudrate9600.Name = "Baudrate9600";
             this.Baudrate9600.Size = new System.Drawing.Size(49, 19);
             this.Baudrate9600.TabIndex = 13;
@@ -169,7 +170,7 @@ namespace OpenCodeReader
             // Baudrate38400
             // 
             this.Baudrate38400.AutoSize = true;
-            this.Baudrate38400.Location = new System.Drawing.Point(218, 51);
+            this.Baudrate38400.Location = new System.Drawing.Point(216, 51);
             this.Baudrate38400.Name = "Baudrate38400";
             this.Baudrate38400.Size = new System.Drawing.Size(55, 19);
             this.Baudrate38400.TabIndex = 14;
@@ -180,17 +181,28 @@ namespace OpenCodeReader
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 53);
+            this.label4.Location = new System.Drawing.Point(9, 53);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 15);
             this.label4.TabIndex = 15;
             this.label4.Text = "Baudrate";
             // 
+            // AboutButton
+            // 
+            this.AboutButton.Location = new System.Drawing.Point(9, 381);
+            this.AboutButton.Name = "AboutButton";
+            this.AboutButton.Size = new System.Drawing.Size(262, 23);
+            this.AboutButton.TabIndex = 16;
+            this.AboutButton.Text = "About";
+            this.AboutButton.UseVisualStyleBackColor = true;
+            this.AboutButton.Click += new System.EventHandler(this.AboutButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 386);
+            this.ClientSize = new System.Drawing.Size(284, 412);
+            this.Controls.Add(this.AboutButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Baudrate38400);
             this.Controls.Add(this.Baudrate9600);
@@ -230,6 +242,7 @@ namespace OpenCodeReader
         private System.Windows.Forms.RadioButton Baudrate9600;
         private System.Windows.Forms.RadioButton Baudrate38400;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button AboutButton;
     }
 }
 
