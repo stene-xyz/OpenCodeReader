@@ -74,6 +74,16 @@ namespace OpenCodeReader
             else Baudrate9600.Checked = true;
         }
 
+        private void initELM()
+        {
+            writeToLog("(Re)initialising ELM327.");
+            writeToPort("atd");
+            writeToPort("atal");
+            writeToPort("ath1");
+            writeToPort("atsh6c29f1");
+            writeToLog("Initialisation done.");
+        }
+
         private void ConnectButton_Click(object sender, EventArgs e)
         {
             writeToLog("Connecting to COM port " + PortID.Text + "...");
@@ -85,17 +95,9 @@ namespace OpenCodeReader
             // Get version
             writeToPort("ati");
             writeToLog("Connected to: " + port.ReadLine());
-            
+
             // Setup ELM327
-            writeToLog("Resetting settings to default...");
-            writeToPort("atd");
-            writeToLog("Enabling long messages...");
-            writeToPort("atal");
-            writeToLog("Enabling headers...");
-            writeToPort("ath1");
-            writeToLog("Setting flow control header to 6C 29 F1...");
-            writeToPort("atsh6c29f1");
-            writeToLog("Initialisation done.");
+            initELM();
         }
 
         private void DisconnectButton_Click(object sender, EventArgs e)
@@ -127,6 +129,9 @@ namespace OpenCodeReader
         {
             // Command to clear codes:
             // 14
+            initELM();
+            writeToPort("14");
+            writeToLog("Cleared trouble codes.");
         }
 
         private void ScanABS_Click(object sender, EventArgs e)
@@ -138,6 +143,7 @@ namespace OpenCodeReader
             // Where XX are the ending two of the code "C02XX"
             // Everything else can be discarded
 
+            initELM(); // Make sure we don't have any wacky-ass settings applied
             writeToLog("Scanning for ABS trouble codes...");
             writeToPort("1992FF00");
             String code = "FF";
