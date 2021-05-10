@@ -103,8 +103,9 @@ namespace OpenCodeReader
             this.ScanEngine.Name = "ScanEngine";
             this.ScanEngine.Size = new System.Drawing.Size(93, 23);
             this.ScanEngine.TabIndex = 6;
-            this.ScanEngine.Text = "Scan Engine";
+            this.ScanEngine.Text = "Scan General";
             this.ScanEngine.UseVisualStyleBackColor = true;
+            this.ScanEngine.Click += new System.EventHandler(this.ScanEngine_Click);
             // 
             // ScanABS
             // 
