@@ -47,6 +47,8 @@ namespace OpenCodeReader
             this.LogView = new System.Windows.Forms.ListBox();
             this.CodeView = new System.Windows.Forms.ListBox();
             this.TerminalView = new System.Windows.Forms.ListBox();
+            this.GetPIDsButton = new System.Windows.Forms.Button();
+            this.ResetTroubleCodesButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ConnectButton
@@ -112,6 +114,7 @@ namespace OpenCodeReader
             this.ScanABS.TabIndex = 7;
             this.ScanABS.Text = "Scan ABS";
             this.ScanABS.UseVisualStyleBackColor = true;
+            this.ScanABS.Click += new System.EventHandler(this.ScanABS_Click);
             // 
             // label3
             // 
@@ -197,7 +200,7 @@ namespace OpenCodeReader
             this.LogView.ItemHeight = 15;
             this.LogView.Location = new System.Drawing.Point(277, 27);
             this.LogView.Name = "LogView";
-            this.LogView.Size = new System.Drawing.Size(208, 379);
+            this.LogView.Size = new System.Drawing.Size(208, 319);
             this.LogView.TabIndex = 19;
             // 
             // CodeView
@@ -218,11 +221,33 @@ namespace OpenCodeReader
             this.TerminalView.Size = new System.Drawing.Size(262, 109);
             this.TerminalView.TabIndex = 21;
             // 
+            // GetPIDsButton
+            // 
+            this.GetPIDsButton.Location = new System.Drawing.Point(277, 353);
+            this.GetPIDsButton.Name = "GetPIDsButton";
+            this.GetPIDsButton.Size = new System.Drawing.Size(208, 23);
+            this.GetPIDsButton.TabIndex = 22;
+            this.GetPIDsButton.Text = "Get PIDs";
+            this.GetPIDsButton.UseVisualStyleBackColor = true;
+            this.GetPIDsButton.Click += new System.EventHandler(this.GetPIDsButton_Click);
+            // 
+            // ResetTroubleCodesButton
+            // 
+            this.ResetTroubleCodesButton.Location = new System.Drawing.Point(277, 382);
+            this.ResetTroubleCodesButton.Name = "ResetTroubleCodesButton";
+            this.ResetTroubleCodesButton.Size = new System.Drawing.Size(208, 23);
+            this.ResetTroubleCodesButton.TabIndex = 23;
+            this.ResetTroubleCodesButton.Text = "Reset Trouble Codes";
+            this.ResetTroubleCodesButton.UseVisualStyleBackColor = true;
+            this.ResetTroubleCodesButton.Click += new System.EventHandler(this.ResetTroubleCodesButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 417);
+            this.Controls.Add(this.ResetTroubleCodesButton);
+            this.Controls.Add(this.GetPIDsButton);
             this.Controls.Add(this.TerminalView);
             this.Controls.Add(this.CodeView);
             this.Controls.Add(this.LogView);
@@ -268,6 +293,8 @@ namespace OpenCodeReader
         private System.Windows.Forms.ListBox LogView;
         private System.Windows.Forms.ListBox CodeView;
         private System.Windows.Forms.ListBox TerminalView;
+        private System.Windows.Forms.Button GetPIDsButton;
+        private System.Windows.Forms.Button ResetTroubleCodesButton;
     }
 }
 

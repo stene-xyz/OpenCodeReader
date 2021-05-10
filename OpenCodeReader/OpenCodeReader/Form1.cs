@@ -50,6 +50,12 @@ namespace OpenCodeReader
             TerminalView.TopIndex = TerminalView.Items.Count - 1;
         }
 
+        private void writeToCodes(String message)
+        {
+            CodeView.Items.Add(message);
+            CodeView.TopIndex = CodeView.Items.Count - 1;
+        }
+
         private void writeToPort(String message)
         {
             port.WriteLine(message);
@@ -73,11 +79,23 @@ namespace OpenCodeReader
             writeToLog("Connecting to COM port " + PortID.Text + "...");
             port = new SerialPort(PortID.Text, getBaudRate(), Parity.None, 8, StopBits.One);
             port.Open();
+            port.ReadTimeout = 1000;
             port.NewLine = "\r"; // The ELM327 uses carriage return, not newline
 
             // Get version
             writeToPort("ati");
             writeToLog("Connected to: " + port.ReadLine());
+            
+            // Setup ELM327
+            writeToLog("Resetting settings to default...");
+            writeToPort("atd");
+            writeToLog("Enabling long messages...");
+            writeToPort("atal");
+            writeToLog("Enabling headers...");
+            writeToPort("ath1");
+            writeToLog("Setting flow control header to 6C 29 F1...");
+            writeToPort("atsh6c29f1");
+            writeToLog("Initialisation done.");
         }
 
         private void DisconnectButton_Click(object sender, EventArgs e)
@@ -98,6 +116,42 @@ namespace OpenCodeReader
             writeToPort(TerminalInput.Text);
             port.ReadLine(); // Throw out garbage
             writeToTerminal(port.ReadLine());
+        }
+
+        private void GetPIDsButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ResetTroubleCodesButton_Click(object sender, EventArgs e)
+        {
+            // Command to clear codes:
+            // 14
+        }
+
+        private void ScanABS_Click(object sender, EventArgs e)
+        {
+            // Commands to get ABS errors:
+            // 1992FF00
+            // This returns a code in this format:
+            // 6C F1 29 xx XX D2 xx
+            // Where XX are the ending two of the code "C02XX"
+            // Everything else can be discarded
+
+            writeToLog("Scanning for ABS trouble codes...");
+            writeToPort("1992FF00");
+            String code = "FF";
+            while(code != "00") // 00 marks the end of codes
+            {
+                String temp = port.ReadLine();
+                if (temp.Length < 12) code = "00";
+                else
+                {
+                    code = temp.Substring(10, 2);
+                    if (code == "00") break;
+                    writeToCodes("C02" + code);
+                }
+            }
         }
     }
 }
