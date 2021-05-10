@@ -6,6 +6,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Company>Johnny Stene</Company>
     <Authors>Johnny Stene</Authors>
+    <Description>Free and open-source code reader for GM vehicles made between 1996 and 2008.</Description>
+    <Copyright>Copyright (C) 2021 Johnny Stene</Copyright>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>

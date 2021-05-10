@@ -36,7 +36,6 @@ namespace OpenCodeReader
             this.labelCopyright = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
-            this.labelCompanyName = new System.Windows.Forms.Label();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -52,7 +51,6 @@ namespace OpenCodeReader
             this.tableLayoutPanel.Controls.Add(this.labelCopyright, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 1, 4);
             this.tableLayoutPanel.Controls.Add(this.okButton, 1, 5);
-            this.tableLayoutPanel.Controls.Add(this.labelCompanyName, 1, 3);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(10, 10);
             this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -142,16 +140,6 @@ namespace OpenCodeReader
             this.okButton.Text = "&OK";
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
-            // labelCompanyName
-            // 
-            this.labelCompanyName.AutoSize = true;
-            this.labelCompanyName.Location = new System.Drawing.Point(163, 90);
-            this.labelCompanyName.Name = "labelCompanyName";
-            this.labelCompanyName.Size = new System.Drawing.Size(116, 15);
-            this.labelCompanyName.TabIndex = 25;
-            this.labelCompanyName.Text = "labelCompanyName";
-            this.labelCompanyName.Visible = false;
-            // 
             // AboutBox1
             // 
             this.AcceptButton = this.okButton;
@@ -185,6 +173,5 @@ namespace OpenCodeReader
         private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Label labelCompanyName;
     }
 }
