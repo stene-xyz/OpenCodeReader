@@ -140,7 +140,7 @@ namespace OpenCodeReader
             // 
             // TerminalSend
             // 
-            this.TerminalSend.Location = new System.Drawing.Point(196, 352);
+            this.TerminalSend.Location = new System.Drawing.Point(196, 353);
             this.TerminalSend.Name = "TerminalSend";
             this.TerminalSend.Size = new System.Drawing.Size(75, 23);
             this.TerminalSend.TabIndex = 11;
