@@ -81,6 +81,8 @@ namespace OpenCodeReader
             writeToPort("atal");
             writeToPort("ath1");
             writeToPort("atsh6c29f1");
+            port.ReadLine();
+            port.ReadLine();
             writeToLog("Initialisation done.");
         }
 
@@ -91,10 +93,6 @@ namespace OpenCodeReader
             port.Open();
             port.ReadTimeout = 1000;
             port.NewLine = "\r"; // The ELM327 uses carriage return, not newline
-
-            // Get version
-            writeToPort("ati");
-            writeToLog("Connected to: " + port.ReadLine());
 
             // Setup ELM327
             initELM();
@@ -116,8 +114,12 @@ namespace OpenCodeReader
         private void TerminalSend_Click(object sender, EventArgs e)
         {
             writeToPort(TerminalInput.Text);
-            port.ReadLine(); // Throw out garbage
-            writeToTerminal(port.ReadLine());
+            while (true)
+            {
+                String temp = port.ReadLine();
+                if (temp == "") break;
+                writeToTerminal(temp);
+            }
         }
 
         private void GetPIDsButton_Click(object sender, EventArgs e)
