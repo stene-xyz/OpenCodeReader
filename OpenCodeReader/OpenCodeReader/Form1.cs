@@ -19,6 +19,7 @@
 using System;
 using System.IO.Ports;
 using System.Text;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace OpenCodeReader
@@ -75,8 +76,7 @@ namespace OpenCodeReader
             WriteToPort("atal");
             WriteToPort("ats1");
             WriteToPort("ath1");
-            port.ReadLine();
-            port.ReadLine();
+            WaitForResponseTimeout();
             WriteToLog("Initialisation done.");
         }
 
@@ -84,6 +84,35 @@ namespace OpenCodeReader
         {
             port = new SerialPort((string)SerialPortSelector.SelectedItem, baudrate, Parity.None, 8, StopBits.One);
             port.Open();
+        }
+
+        private void WaitForResponseTimeout()
+        {
+            WriteToLog("Waiting for timeout...");
+            while (true)
+            {
+                try
+                {
+                    String temp = port.ReadLine();
+                }
+                catch (Exception) { break; }
+            }
+        }
+
+        private string[] WaitForFullResponse()
+        {
+            WriteToLog("Waiting for response...");
+            List<string> response = new List<string>() ;
+            while (true)
+            {
+                try
+                {
+                    String temp = port.ReadLine();
+                    response.Add(temp);
+                }
+                catch (Exception) { break; }
+            }
+            return response.ToArray();
         }
 
         private void ConnectButton_Click(object sender, EventArgs e)
@@ -129,11 +158,17 @@ namespace OpenCodeReader
         private void TerminalSend_Click(object sender, EventArgs e)
         {
             WriteToPort(TerminalInput.Text);
-            while (true)
+            /*while (true)
             {
                 String temp = port.ReadLine();
                 if (temp == "") break;
                 WriteToTerminal(temp);
+            }*/
+
+            string[] response = WaitForFullResponse();
+            foreach(string responseLine in response)
+            {
+                WriteToTerminal(responseLine);
             }
         }
 
@@ -146,14 +181,9 @@ namespace OpenCodeReader
             WriteToLog("Cleared trouble codes.");
         }
 
+        // This is just here in case shit breaks with the other code reader thing
         private void ScanABS_Click(object sender, EventArgs e)
         {
-            // Commands to get ABS errors:
-            // 1992FF00
-            // This returns a code in this format:
-            // 6C F1 29 <Code first byte> <Code second byte> D2 xx
-            
-            //initELM(); // Make sure we don't have any wacky-ass settings applied
             WriteToLog("Scanning for ABS trouble codes...");
             WriteToPort("1992FF00");
             String code = "FFFF";
