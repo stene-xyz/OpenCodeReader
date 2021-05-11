@@ -154,7 +154,7 @@ namespace OpenCodeReader
 
         private void AboutButton_Click(object sender, EventArgs e)
         {
-            AboutBox1 aboutBox1 = new AboutBox1();
+            AboutMenu aboutBox1 = new AboutMenu();
             aboutBox1.Show();
         }
 
