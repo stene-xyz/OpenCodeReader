@@ -80,7 +80,7 @@ namespace OpenCodeReader
             this.ScanEngine.TabIndex = 6;
             this.ScanEngine.Text = "Read";
             this.ScanEngine.UseVisualStyleBackColor = true;
-            this.ScanEngine.Click += new System.EventHandler(this.ScanEngine_Click);
+            this.ScanEngine.Click += new System.EventHandler(this.ScanButton_Click);
             // 
             // TerminalSend
             // 

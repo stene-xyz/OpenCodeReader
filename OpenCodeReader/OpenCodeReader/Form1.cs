@@ -27,6 +27,7 @@ namespace OpenCodeReader
     {
         private SerialPort port;
         private string[] availablePorts;
+        private bool printRawData = false;
 
         public Form1()
         {
@@ -41,82 +42,80 @@ namespace OpenCodeReader
             BaudRateSelector.SelectedIndex = 0;
         }
 
-        private void writeToLog(String message)
+        private void WriteToLog(String message)
         {
             LogView.Items.Add(message);
             LogView.TopIndex = LogView.Items.Count - 1;
         }
 
-        private void writeToTerminal(String message)
+        private void WriteToTerminal(String message)
         {
             TerminalView.Items.Add(message);
             TerminalView.TopIndex = TerminalView.Items.Count - 1;
         }
 
-        private void writeToCodes(String message)
+        private void WriteToCodeView(String message)
         {
             CodeView.Items.Add(message);
             CodeView.TopIndex = CodeView.Items.Count - 1;
         }
 
-        private void writeToPort(String message)
+        private void WriteToPort(String message)
         {
             port.WriteLine(message);
             port.ReadLine(); // get rid of echo
         }
 
-        private void initELM()
+        private void InitialiseInterface()
         {
-            writeToLog("(Re)initialising ELM327.");
+            WriteToLog("Initialising ELM327.");
             port.ReadTimeout = 1000;
             port.NewLine = "\r"; // The ELM327 uses carriage return, not newline
-            writeToPort("atd");
-            writeToPort("atal");
-            writeToPort("ats1");
-            writeToPort("ath1");
+            WriteToPort("atd");
+            WriteToPort("atal");
+            WriteToPort("ats1");
+            WriteToPort("ath1");
             port.ReadLine();
             port.ReadLine();
-            writeToLog("Initialisation done.");
+            WriteToLog("Initialisation done.");
+        }
+
+        private void InitialisePort(int baudrate)
+        {
+            port = new SerialPort((string)SerialPortSelector.SelectedItem, baudrate, Parity.None, 8, StopBits.One);
+            port.Open();
         }
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            String PortID = (string)SerialPortSelector.SelectedItem;
-            writeToLog("Connecting to COM port " + PortID + "...");
+            WriteToLog("Connecting to COM port " + (string)SerialPortSelector.SelectedItem + "...");
 
-            if(BaudRateSelector.SelectedIndex == 0) // Auto-select baudrate
+            if (BaudRateSelector.SelectedIndex == 0) // Auto-select baudrate
             {
-                writeToLog("Autodetecting baudrate...");
+                WriteToLog("Autodetecting baudrate...");
                 try
                 {
-                    writeToLog("Trying 9600 baud...");
-                    port = new SerialPort(PortID, 9600, Parity.None, 8, StopBits.One);
-                    port.Open();
-                    initELM();
-                } catch(Exception)
-                {
-                    writeToLog("Trying 38400 baud...");
-                    port.Close();
-                    port = new SerialPort(PortID, 38400, Parity.None, 8, StopBits.One);
-                    port.Open();
-                    initELM();
+                    WriteToLog("Trying 9600 baud...");
+                    InitialisePort(9600);
+                    InitialiseInterface();
                 }
-            } else if(BaudRateSelector.SelectedIndex == 1)
+                catch (Exception)
+                {
+                    WriteToLog("Trying 38400 baud...");
+                    port.Close();
+                    InitialisePort(38400);
+                    InitialiseInterface();
+                }
+            }
+            else
             {
-                port = new SerialPort(PortID, 9600, Parity.None, 8, StopBits.One);
-                port.Open();
-                initELM();
-            } else if(BaudRateSelector.SelectedIndex == 2)
-            {
-                port = new SerialPort(PortID, 38400, Parity.None, 8, StopBits.One);
-                port.Open();
-                initELM();
+                InitialisePort(int.Parse((string)BaudRateSelector.SelectedItem));
             }
         }
 
         private void DisconnectButton_Click(object sender, EventArgs e)
         {
-            writeToLog("Disconnecting from COM port.");
+            WriteToLog("Disconnecting from COM port.");
             port.Close();
             port = null;
         }
@@ -129,27 +128,22 @@ namespace OpenCodeReader
 
         private void TerminalSend_Click(object sender, EventArgs e)
         {
-            writeToPort(TerminalInput.Text);
+            WriteToPort(TerminalInput.Text);
             while (true)
             {
                 String temp = port.ReadLine();
                 if (temp == "") break;
-                writeToTerminal(temp);
+                WriteToTerminal(temp);
             }
-        }
-
-        private void GetPIDsButton_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void ResetTroubleCodesButton_Click(object sender, EventArgs e)
         {
             // Command to clear codes:
             // 14
-            initELM();
-            writeToPort("14");
-            writeToLog("Cleared trouble codes.");
+            InitialiseInterface();
+            WriteToPort("14");
+            WriteToLog("Cleared trouble codes.");
         }
 
         private void ScanABS_Click(object sender, EventArgs e)
@@ -160,29 +154,29 @@ namespace OpenCodeReader
             // 6C F1 29 <Code first byte> <Code second byte> D2 xx
             
             //initELM(); // Make sure we don't have any wacky-ass settings applied
-            writeToLog("Scanning for ABS trouble codes...");
-            writeToPort("1992FF00");
+            WriteToLog("Scanning for ABS trouble codes...");
+            WriteToPort("1992FF00");
             String code = "FFFF";
             while (true)
             {
                 try
                 {
                     String temp = port.ReadLine();
-                    writeToLog("RAW: " + temp);
+                    WriteToLog("RAW: " + temp);
                     if (!temp.StartsWith(">"))
                     {
                         if (temp.Length > 6)
                         {
                             code = temp.Substring(3, 2) + temp.Substring(6, 2);
                             if (code == "0000") break;
-                            writeToCodes(stringToTroubleCode(code));
+                            WriteToCodeView(ConvertDTCToString(code));
                         }
                     }
                 } catch(Exception) { break; }
             }
         }
 
-        private String stringToTroubleCode(String str)
+        private String ConvertDTCToString(String str)
         {
             String firstByte = str.Substring(0, 2);
             String secondByte = str.Substring(2, 2);
@@ -210,77 +204,43 @@ namespace OpenCodeReader
             return troubleCode;
         }
 
-        private void ScanEngine_Click(object sender, EventArgs e)
+        private void ScanButton_Click(object sender, EventArgs e)
         {
-            // We should be able to scan with service 0x03.
-            // The first two bits decide the type:
-            // 00 is powertrain (P)
-            // 01 is chassis (C)
-            // 10 is body (B)
-            // 11 is network (U)
-            // The next two decide the first character:
-            // 00 is 0
-            // 01 is 1
-            // 10 is 2
-            // 11 is 3
-            // The third, fourth, and fifth are defined like normal hex:
-            // 0000 - 0
-            // 0001 - 1
-            // 0010 - 2
-            // 0011 - 3
-            // 0100 - 4
-            // 0101 - 5
-            // 0110 - 6
-            // 0111 - 7
-            // 1000 - 8
-            // 1001 - 9
-            // 1010 - A
-            // 1011 - B
-            // 1100 - C
-            // 1101 - D
-            // 1110 - E
-            // 1111 - F
-
-            writeToLog("Scanning for trouble codes...");
+            WriteToLog("Scanning for trouble codes...");
             if(CodeTypeSelector.SelectedIndex == 0) // General codes
             {
-                writeToPort("03");
-                dumpTroubleCodes();
-                writeToPort("07");
-                dumpTroubleCodes();
-                writeToPort("0A");
-                dumpTroubleCodes();
+                ReadOutTroubleCodes("03");
+                ReadOutTroubleCodes("07");
+                ReadOutTroubleCodes("0A");
             } else if(CodeTypeSelector.SelectedIndex == 1) // GM '96-'08 special (ABS, Airbag, etc...)
             {
-                writeToPort("atsh6cfef1"); // Tell ALL GM modules to respond
-                writeToPort("19FFFF00"); // Request ALL trouble codes, pending and present.
-                dumpTroubleCodes();
+                WriteToPort("atsh6cfef1"); // Tell ALL GM modules to respond
+                ReadOutTroubleCodes("19FFFF00");
             }
         }
 
-        private void dumpTroubleCodes()
+        private void ReadOutTroubleCodes(String command)
         {
+            WriteToPort(command);
             String code = "FFFF";
             while (true)
             {
                 try
                 {
                     String temp = port.ReadLine();
-                    if(printRawData) writeToLog("RAW: " + temp);
+                    if(printRawData) WriteToLog("RAW: " + temp);
                     if (!temp.StartsWith(">"))
                     {
                         if (temp.Length > 6)
                         {
                             code = temp.Substring(3, 2) + temp.Substring(6, 2);
                             if (code == "0000") break;
-                            writeToCodes(stringToTroubleCode(code));
+                            WriteToCodeView(ConvertDTCToString(code));
                         }
                     }
                 }
                 catch (Exception) { break; }
             }
         }
-
-        private bool printRawData = false;
     }
 }
