@@ -35,7 +35,6 @@ namespace OpenCodeReader
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ScanEngine = new System.Windows.Forms.Button();
-            this.ScanABS = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.TerminalSend = new System.Windows.Forms.Button();
             this.TerminalInput = new System.Windows.Forms.TextBox();
@@ -101,21 +100,11 @@ namespace OpenCodeReader
             // 
             this.ScanEngine.Location = new System.Drawing.Point(9, 192);
             this.ScanEngine.Name = "ScanEngine";
-            this.ScanEngine.Size = new System.Drawing.Size(93, 23);
+            this.ScanEngine.Size = new System.Drawing.Size(262, 23);
             this.ScanEngine.TabIndex = 6;
-            this.ScanEngine.Text = "Scan General";
+            this.ScanEngine.Text = "Read Trouble Codes";
             this.ScanEngine.UseVisualStyleBackColor = true;
             this.ScanEngine.Click += new System.EventHandler(this.ScanEngine_Click);
-            // 
-            // ScanABS
-            // 
-            this.ScanABS.Location = new System.Drawing.Point(178, 192);
-            this.ScanABS.Name = "ScanABS";
-            this.ScanABS.Size = new System.Drawing.Size(93, 23);
-            this.ScanABS.TabIndex = 7;
-            this.ScanABS.Text = "Scan ABS";
-            this.ScanABS.UseVisualStyleBackColor = true;
-            this.ScanABS.Click += new System.EventHandler(this.ScanABS_Click);
             // 
             // label3
             // 
@@ -260,7 +249,6 @@ namespace OpenCodeReader
             this.Controls.Add(this.TerminalInput);
             this.Controls.Add(this.TerminalSend);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.ScanABS);
             this.Controls.Add(this.ScanEngine);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -282,7 +270,6 @@ namespace OpenCodeReader
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button ScanEngine;
-        private System.Windows.Forms.Button ScanABS;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button TerminalSend;
         private System.Windows.Forms.TextBox TerminalInput;

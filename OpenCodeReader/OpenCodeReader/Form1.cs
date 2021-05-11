@@ -225,6 +225,41 @@ namespace OpenCodeReader
             // 1101 - D
             // 1110 - E
             // 1111 - F
+
+            writeToLog("Scanning for trouble codes...");
+            writeToPort("03");
+            dumpTroubleCodes();
+            writeToPort("07");
+            dumpTroubleCodes();
+            writeToPort("0A");
+            dumpTroubleCodes();
+            writeToPort("1992FF00");
+            dumpTroubleCodes();
         }
+
+        private void dumpTroubleCodes()
+        {
+            String code = "FFFF";
+            while (true)
+            {
+                try
+                {
+                    String temp = port.ReadLine();
+                    if(printRawData) writeToLog("RAW: " + temp);
+                    if (!temp.StartsWith(">"))
+                    {
+                        if (temp.Length > 6)
+                        {
+                            code = temp.Substring(3, 2) + temp.Substring(6, 2);
+                            if (code == "0000") break;
+                            writeToCodes(stringToTroubleCode(code));
+                        }
+                    }
+                }
+                catch (Exception) { break; }
+            }
+        }
+
+        private bool printRawData = false;
     }
 }
