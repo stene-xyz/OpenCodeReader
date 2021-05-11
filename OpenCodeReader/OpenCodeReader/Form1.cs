@@ -38,12 +38,7 @@ namespace OpenCodeReader
                 SerialPortSelector.Items.Add(portname);
             }
             SerialPortSelector.SelectedIndex = 0;
-        }
-
-        private int getBaudRate()
-        {
-            if (Baudrate38400.Checked) return 38400;
-            else return 9600;
+            BaudRateSelector.SelectedIndex = 0;
         }
 
         private void writeToLog(String message)
@@ -70,21 +65,11 @@ namespace OpenCodeReader
             port.ReadLine(); // get rid of echo
         }
 
-        private void Baudrate9600_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Baudrate9600.Checked) Baudrate38400.Checked = false;
-            else Baudrate38400.Checked = true;
-        }
-
-        private void Baudrate38400_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Baudrate38400.Checked) Baudrate9600.Checked = false;
-            else Baudrate9600.Checked = true;
-        }
-
         private void initELM()
         {
             writeToLog("(Re)initialising ELM327.");
+            port.ReadTimeout = 1000;
+            port.NewLine = "\r"; // The ELM327 uses carriage return, not newline
             writeToPort("atd");
             writeToPort("atal");
             writeToPort("ats1");
@@ -98,13 +83,35 @@ namespace OpenCodeReader
         {
             String PortID = (string)SerialPortSelector.SelectedItem;
             writeToLog("Connecting to COM port " + PortID + "...");
-            port = new SerialPort(PortID, getBaudRate(), Parity.None, 8, StopBits.One);
-            port.Open();
-            port.ReadTimeout = 1000;
-            port.NewLine = "\r"; // The ELM327 uses carriage return, not newline
 
-            // Setup ELM327
-            initELM();
+            if(BaudRateSelector.SelectedIndex == 0) // Auto-select baudrate
+            {
+                writeToLog("Autodetecting baudrate...");
+                try
+                {
+                    writeToLog("Trying 9600 baud...");
+                    port = new SerialPort(PortID, 9600, Parity.None, 8, StopBits.One);
+                    port.Open();
+                    initELM();
+                } catch(Exception)
+                {
+                    writeToLog("Trying 38400 baud...");
+                    port.Close();
+                    port = new SerialPort(PortID, 38400, Parity.None, 8, StopBits.One);
+                    port.Open();
+                    initELM();
+                }
+            } else if(BaudRateSelector.SelectedIndex == 1)
+            {
+                port = new SerialPort(PortID, 9600, Parity.None, 8, StopBits.One);
+                port.Open();
+                initELM();
+            } else if(BaudRateSelector.SelectedIndex == 2)
+            {
+                port = new SerialPort(PortID, 38400, Parity.None, 8, StopBits.One);
+                port.Open();
+                initELM();
+            }
         }
 
         private void DisconnectButton_Click(object sender, EventArgs e)

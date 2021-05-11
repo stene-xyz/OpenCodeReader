@@ -99,7 +99,6 @@ namespace OpenCodeReader
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(316, 20);
             this.labelVersion.TabIndex = 0;
-            this.labelVersion.Text = "Version 1.0.0";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelCopyright
@@ -111,7 +110,6 @@ namespace OpenCodeReader
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(316, 20);
             this.labelCopyright.TabIndex = 21;
-            this.labelCopyright.Text = "Copyright (C) 2021 Johnny Stene. Released under GPL3.";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxDescription
