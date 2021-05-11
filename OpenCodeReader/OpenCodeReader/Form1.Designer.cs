@@ -31,7 +31,6 @@ namespace OpenCodeReader
         {
             this.ConnectButton = new System.Windows.Forms.Button();
             this.DisconnectButton = new System.Windows.Forms.Button();
-            this.PortID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ScanEngine = new System.Windows.Forms.Button();
@@ -48,6 +47,8 @@ namespace OpenCodeReader
             this.TerminalView = new System.Windows.Forms.ListBox();
             this.GetPIDsButton = new System.Windows.Forms.Button();
             this.ResetTroubleCodesButton = new System.Windows.Forms.Button();
+            this.CodeTypeSelector = new System.Windows.Forms.ComboBox();
+            this.SerialPortSelector = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // ConnectButton
@@ -69,14 +70,6 @@ namespace OpenCodeReader
             this.DisconnectButton.Text = "Disconnect";
             this.DisconnectButton.UseVisualStyleBackColor = true;
             this.DisconnectButton.Click += new System.EventHandler(this.DisconnectButton_Click);
-            // 
-            // PortID
-            // 
-            this.PortID.Location = new System.Drawing.Point(9, 27);
-            this.PortID.Name = "PortID";
-            this.PortID.Size = new System.Drawing.Size(100, 23);
-            this.PortID.TabIndex = 2;
-            this.PortID.Text = "COM1";
             // 
             // label1
             // 
@@ -100,9 +93,9 @@ namespace OpenCodeReader
             // 
             this.ScanEngine.Location = new System.Drawing.Point(9, 192);
             this.ScanEngine.Name = "ScanEngine";
-            this.ScanEngine.Size = new System.Drawing.Size(262, 23);
+            this.ScanEngine.Size = new System.Drawing.Size(54, 23);
             this.ScanEngine.TabIndex = 6;
-            this.ScanEngine.Text = "Read Trouble Codes";
+            this.ScanEngine.Text = "Read";
             this.ScanEngine.UseVisualStyleBackColor = true;
             this.ScanEngine.Click += new System.EventHandler(this.ScanEngine_Click);
             // 
@@ -231,11 +224,32 @@ namespace OpenCodeReader
             this.ResetTroubleCodesButton.UseVisualStyleBackColor = true;
             this.ResetTroubleCodesButton.Click += new System.EventHandler(this.ResetTroubleCodesButton_Click);
             // 
+            // CodeTypeSelector
+            // 
+            this.CodeTypeSelector.FormattingEnabled = true;
+            this.CodeTypeSelector.Items.AddRange(new object[] {
+            "General DTC",
+            "\'96-\'08 GM ABS, Airbag, BCM, TCCM"});
+            this.CodeTypeSelector.Location = new System.Drawing.Point(69, 192);
+            this.CodeTypeSelector.Name = "CodeTypeSelector";
+            this.CodeTypeSelector.Size = new System.Drawing.Size(202, 23);
+            this.CodeTypeSelector.TabIndex = 24;
+            // 
+            // SerialPortSelector
+            // 
+            this.SerialPortSelector.FormattingEnabled = true;
+            this.SerialPortSelector.Location = new System.Drawing.Point(12, 27);
+            this.SerialPortSelector.Name = "SerialPortSelector";
+            this.SerialPortSelector.Size = new System.Drawing.Size(97, 23);
+            this.SerialPortSelector.TabIndex = 25;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 417);
+            this.Controls.Add(this.SerialPortSelector);
+            this.Controls.Add(this.CodeTypeSelector);
             this.Controls.Add(this.ResetTroubleCodesButton);
             this.Controls.Add(this.GetPIDsButton);
             this.Controls.Add(this.TerminalView);
@@ -252,7 +266,6 @@ namespace OpenCodeReader
             this.Controls.Add(this.ScanEngine);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.PortID);
             this.Controls.Add(this.DisconnectButton);
             this.Controls.Add(this.ConnectButton);
             this.Name = "Form1";
@@ -266,7 +279,6 @@ namespace OpenCodeReader
 
         private System.Windows.Forms.Button ConnectButton;
         private System.Windows.Forms.Button DisconnectButton;
-        private System.Windows.Forms.TextBox PortID;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button ScanEngine;
@@ -283,6 +295,8 @@ namespace OpenCodeReader
         private System.Windows.Forms.ListBox TerminalView;
         private System.Windows.Forms.Button GetPIDsButton;
         private System.Windows.Forms.Button ResetTroubleCodesButton;
+        private System.Windows.Forms.ComboBox CodeTypeSelector;
+        private System.Windows.Forms.ComboBox SerialPortSelector;
     }
 }
 

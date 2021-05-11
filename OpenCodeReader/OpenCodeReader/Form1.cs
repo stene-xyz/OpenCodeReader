@@ -26,10 +26,18 @@ namespace OpenCodeReader
     public partial class Form1 : Form
     {
         private SerialPort port;
+        private string[] availablePorts;
 
         public Form1()
         {
             InitializeComponent();
+            CodeTypeSelector.SelectedIndex = 0;
+            availablePorts = SerialPort.GetPortNames();
+            foreach(string portname in availablePorts)
+            {
+                SerialPortSelector.Items.Add(portname);
+            }
+            SerialPortSelector.SelectedIndex = 0;
         }
 
         private int getBaudRate()
@@ -81,7 +89,6 @@ namespace OpenCodeReader
             writeToPort("atal");
             writeToPort("ats1");
             writeToPort("ath1");
-            writeToPort("atsh6c29f1");
             port.ReadLine();
             port.ReadLine();
             writeToLog("Initialisation done.");
@@ -89,8 +96,9 @@ namespace OpenCodeReader
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            writeToLog("Connecting to COM port " + PortID.Text + "...");
-            port = new SerialPort(PortID.Text, getBaudRate(), Parity.None, 8, StopBits.One);
+            String PortID = (string)SerialPortSelector.SelectedItem;
+            writeToLog("Connecting to COM port " + PortID + "...");
+            port = new SerialPort(PortID, getBaudRate(), Parity.None, 8, StopBits.One);
             port.Open();
             port.ReadTimeout = 1000;
             port.NewLine = "\r"; // The ELM327 uses carriage return, not newline
@@ -227,14 +235,20 @@ namespace OpenCodeReader
             // 1111 - F
 
             writeToLog("Scanning for trouble codes...");
-            writeToPort("03");
-            dumpTroubleCodes();
-            writeToPort("07");
-            dumpTroubleCodes();
-            writeToPort("0A");
-            dumpTroubleCodes();
-            writeToPort("1992FF00");
-            dumpTroubleCodes();
+            if(CodeTypeSelector.SelectedIndex == 0) // General codes
+            {
+                writeToPort("03");
+                dumpTroubleCodes();
+                writeToPort("07");
+                dumpTroubleCodes();
+                writeToPort("0A");
+                dumpTroubleCodes();
+            } else if(CodeTypeSelector.SelectedIndex == 1) // GM '96-'08 special (ABS, Airbag, etc...)
+            {
+                writeToPort("atsh6cfef1"); // Tell ALL GM modules to respond
+                writeToPort("19FFFF00"); // Request ALL trouble codes, pending and present.
+                dumpTroubleCodes();
+            }
         }
 
         private void dumpTroubleCodes()
