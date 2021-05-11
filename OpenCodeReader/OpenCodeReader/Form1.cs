@@ -57,6 +57,7 @@ namespace OpenCodeReader
 
         private void WriteToCodeView(String message)
         {
+            if (CodeView.Items.Contains(message)) return;
             CodeView.Items.Add(message);
             CodeView.TopIndex = CodeView.Items.Count - 1;
         }
@@ -64,6 +65,7 @@ namespace OpenCodeReader
         private void WriteToPort(String message)
         {
             port.WriteLine(message);
+            WriteToLog("> " + message);
             port.ReadLine(); // get rid of echo
         }
 
@@ -108,6 +110,7 @@ namespace OpenCodeReader
                 try
                 {
                     String temp = port.ReadLine();
+                    WriteToLog("< " + temp);
                     response.Add(temp);
                 }
                 catch (Exception) { break; }
@@ -181,31 +184,6 @@ namespace OpenCodeReader
             WriteToLog("Cleared trouble codes.");
         }
 
-        // This is just here in case shit breaks with the other code reader thing
-        private void ScanABS_Click(object sender, EventArgs e)
-        {
-            WriteToLog("Scanning for ABS trouble codes...");
-            WriteToPort("1992FF00");
-            String code = "FFFF";
-            while (true)
-            {
-                try
-                {
-                    String temp = port.ReadLine();
-                    WriteToLog("RAW: " + temp);
-                    if (!temp.StartsWith(">"))
-                    {
-                        if (temp.Length > 6)
-                        {
-                            code = temp.Substring(3, 2) + temp.Substring(6, 2);
-                            if (code == "0000") break;
-                            WriteToCodeView(ConvertDTCToString(code));
-                        }
-                    }
-                } catch(Exception) { break; }
-            }
-        }
-
         private String ConvertDTCToString(String str)
         {
             String firstByte = str.Substring(0, 2);
@@ -237,39 +215,49 @@ namespace OpenCodeReader
         private void ScanButton_Click(object sender, EventArgs e)
         {
             WriteToLog("Scanning for trouble codes...");
-            if(CodeTypeSelector.SelectedIndex == 0) // General codes
+            CodeView.Items.Clear();
+            if(CodeTypeSelector.SelectedIndex == 0) // Generic Scan
             {
                 ReadOutTroubleCodes("03");
                 ReadOutTroubleCodes("07");
                 ReadOutTroubleCodes("0A");
-            } else if(CodeTypeSelector.SelectedIndex == 1) // GM '96-'08 special (ABS, Airbag, etc...)
+            } else if(CodeTypeSelector.SelectedIndex == 1) // GM '96-'08
             {
                 WriteToPort("atsh6cfef1"); // Tell ALL GM modules to respond
-                ReadOutTroubleCodes("19FFFF00");
+                WaitForFullResponse();
+                ReadOutGMTroubleCodes("1992FF00");
+                //ReadOutTroubleCodes("03");
+                //ReadOutTroubleCodes("07");
+                //ReadOutTroubleCodes("0A");
             }
         }
 
         private void ReadOutTroubleCodes(String command)
         {
             WriteToPort(command);
-            String code = "FFFF";
-            while (true)
+            string[] Codes = WaitForFullResponse();
+            foreach (string Code in Codes)
             {
-                try
+                if (Code.Length > 7)
                 {
-                    String temp = port.ReadLine();
-                    if(printRawData) WriteToLog("RAW: " + temp);
-                    if (!temp.StartsWith(">"))
-                    {
-                        if (temp.Length > 6)
-                        {
-                            code = temp.Substring(3, 2) + temp.Substring(6, 2);
-                            if (code == "0000") break;
-                            WriteToCodeView(ConvertDTCToString(code));
-                        }
-                    }
+                    string HexCode = Code.Substring(3, 2) + Code.Substring(6, 2);
+                    if (HexCode != "0000") WriteToCodeView(ConvertDTCToString(HexCode));
                 }
-                catch (Exception) { break; }
+            }
+        }
+
+        private void ReadOutGMTroubleCodes(String command)
+        {
+            WriteToPort(command);
+
+            string[] Codes = WaitForFullResponse();
+            foreach(string Code in Codes)
+            {
+                if(Code.Length > 16)
+                {
+                    string HexCode = Code.Substring(12, 2) + Code.Substring(15, 2);
+                    if (HexCode != "0000") WriteToCodeView(ConvertDTCToString(HexCode));
+                }
             }
         }
     }

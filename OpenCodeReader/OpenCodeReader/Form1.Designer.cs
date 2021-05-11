@@ -43,8 +43,8 @@ namespace OpenCodeReader
             this.SerialPortSelector = new System.Windows.Forms.ComboBox();
             this.BaudRateSelector = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
@@ -150,8 +150,8 @@ namespace OpenCodeReader
             // 
             this.CodeTypeSelector.FormattingEnabled = true;
             this.CodeTypeSelector.Items.AddRange(new object[] {
-            "General DTC",
-            "\'96-\'08 GM ABS, Airbag, BCM, TCCM"});
+            "Most Vehicles, Limited Codes",
+            "GM \'96-\'08, All Codes"});
             this.CodeTypeSelector.Location = new System.Drawing.Point(6, 122);
             this.CodeTypeSelector.Name = "CodeTypeSelector";
             this.CodeTypeSelector.Size = new System.Drawing.Size(188, 23);
@@ -192,15 +192,6 @@ namespace OpenCodeReader
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Port Configuration";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 19);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 15);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "Port";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -209,6 +200,15 @@ namespace OpenCodeReader
             this.label7.Size = new System.Drawing.Size(54, 15);
             this.label7.TabIndex = 28;
             this.label7.Text = "Baudrate";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(29, 15);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "Port";
             // 
             // groupBox2
             // 
