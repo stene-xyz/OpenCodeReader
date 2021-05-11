@@ -4,6 +4,7 @@ Supports any ELM327-based Bluetooth or USB code reader.
 
 ## Features
 - Read all trouble codes, including for ABS
+- Read most trouble codes on unsupported vehicles
 - Clear all trouble codes
 - OBD terminal for directly communicating with the ELM327 or vehicle
 ### Planned Features
