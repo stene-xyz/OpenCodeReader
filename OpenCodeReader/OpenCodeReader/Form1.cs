@@ -79,6 +79,7 @@ namespace OpenCodeReader
             writeToLog("(Re)initialising ELM327.");
             writeToPort("atd");
             writeToPort("atal");
+            writeToPort("ats1");
             writeToPort("ath1");
             writeToPort("atsh6c29f1");
             port.ReadLine();
@@ -143,20 +144,26 @@ namespace OpenCodeReader
             // This returns a code in this format:
             // 6C F1 29 <Code first byte> <Code second byte> D2 xx
             
-            initELM(); // Make sure we don't have any wacky-ass settings applied
+            //initELM(); // Make sure we don't have any wacky-ass settings applied
             writeToLog("Scanning for ABS trouble codes...");
             writeToPort("1992FF00");
-            String code = "FF";
-            while(true)
+            String code = "FFFF";
+            while (true)
             {
-                String temp = port.ReadLine();
-                if (temp.Length < 12) break;
-                else
+                try
                 {
-                    code = temp.Substring(8, 4);
-                    if (code == "0000") break;
-                    writeToCodes(stringToTroubleCode(code));
-                }
+                    String temp = port.ReadLine();
+                    writeToLog("RAW: " + temp);
+                    if (!temp.StartsWith(">"))
+                    {
+                        if (temp.Length > 6)
+                        {
+                            code = temp.Substring(3, 2) + temp.Substring(6, 2);
+                            if (code == "0000") break;
+                            writeToCodes(stringToTroubleCode(code));
+                        }
+                    }
+                } catch(Exception) { break; }
             }
         }
 
