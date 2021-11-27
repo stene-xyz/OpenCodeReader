@@ -1,0 +1,8 @@
+/home/johnny/Code/OpenCodeReader2/.mono/temp/bin/ExportRelease/OpenCodeReader.dll
+/home/johnny/Code/OpenCodeReader2/.mono/temp/bin/ExportRelease/OpenCodeReader.pdb
+/home/johnny/Code/OpenCodeReader2/.mono/temp/obj/ExportRelease/OpenCodeReader.csprojAssemblyReference.cache
+/home/johnny/Code/OpenCodeReader2/.mono/temp/obj/ExportRelease/OpenCodeReader.AssemblyInfoInputs.cache
+/home/johnny/Code/OpenCodeReader2/.mono/temp/obj/ExportRelease/OpenCodeReader.AssemblyInfo.cs
+/home/johnny/Code/OpenCodeReader2/.mono/temp/obj/ExportRelease/OpenCodeReader.csproj.CoreCompileInputs.cache
+/home/johnny/Code/OpenCodeReader2/.mono/temp/obj/ExportRelease/OpenCodeReader.dll
+/home/johnny/Code/OpenCodeReader2/.mono/temp/obj/ExportRelease/OpenCodeReader.pdb

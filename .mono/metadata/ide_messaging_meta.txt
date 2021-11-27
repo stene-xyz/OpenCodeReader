@@ -1,0 +1,2 @@
+﻿44243
+/home/johnny/Applications/Godot_v3.4-stable_mono_x11.64

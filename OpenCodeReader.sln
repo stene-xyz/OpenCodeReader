@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCodeReader", "OpenCodeReader.csproj", "{DE00FB84-EBE4-43B9-BE4C-58CDBA103260}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE00FB84-EBE4-43B9-BE4C-58CDBA103260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE00FB84-EBE4-43B9-BE4C-58CDBA103260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE00FB84-EBE4-43B9-BE4C-58CDBA103260}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{DE00FB84-EBE4-43B9-BE4C-58CDBA103260}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{DE00FB84-EBE4-43B9-BE4C-58CDBA103260}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{DE00FB84-EBE4-43B9-BE4C-58CDBA103260}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,173 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://MainWindow.cs" type="Script" id=1]
+
+[node name="MainWindow" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SerialPortSelector" type="OptionButton" parent="."]
+margin_left = 38.0
+margin_top = 5.0
+margin_right = 190.0
+margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SerialPortSelector"]
+margin_left = -33.0
+margin_top = 4.0
+margin_right = -5.0
+margin_bottom = 18.0
+text = "Port"
+
+[node name="BaudRateSelector" type="OptionButton" parent="."]
+margin_left = 264.0
+margin_top = 5.0
+margin_right = 416.0
+margin_bottom = 25.0
+text = "Auto"
+items = [ "Auto", null, false, 0, null, "9600", null, false, 1, null, "38400", null, false, 2, null ]
+selected = 0
+
+[node name="Label" type="Label" parent="BaudRateSelector"]
+margin_left = -69.0
+margin_top = 4.0
+margin_right = -5.0
+margin_bottom = 18.0
+text = "Baud Rate"
+
+[node name="ConnectButton" type="Button" parent="."]
+margin_left = 423.0
+margin_top = 5.0
+margin_right = 487.0
+margin_bottom = 25.0
+text = "Connect"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+margin_top = 30.0
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Trouble Codes" type="Control" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="CodeView" type="TextEdit" parent="TabContainer/Trouble Codes"]
+margin_top = 25.0
+margin_right = 1016.0
+margin_bottom = 530.0
+readonly = true
+show_line_numbers = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VehicleTypeSelector" type="OptionButton" parent="TabContainer/Trouble Codes"]
+margin_left = 147.0
+margin_top = -1.0
+margin_right = 275.0
+margin_bottom = 19.0
+text = "Generic/Other"
+items = [ "Generic/Other", null, false, 0, null, "GM '96-'08", null, false, 1, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="TabContainer/Trouble Codes/VehicleTypeSelector"]
+margin_left = -142.0
+margin_top = 3.0
+margin_right = -7.0
+margin_bottom = 17.0
+text = "Vehicle Manufacturer"
+
+[node name="ScanDTCButton" type="Button" parent="TabContainer/Trouble Codes"]
+margin_left = 279.0
+margin_top = -1.0
+margin_right = 356.0
+margin_bottom = 19.0
+text = "Scan DTCs"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ClearDTCButton" type="Button" parent="TabContainer/Trouble Codes"]
+margin_left = 361.0
+margin_top = -1.0
+margin_right = 441.0
+margin_bottom = 19.0
+text = "Clear DTCs"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Serial Terminal" type="Control" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="LogView" type="TextEdit" parent="TabContainer/Serial Terminal"]
+margin_right = 1016.0
+margin_bottom = 505.0
+readonly = true
+syntax_highlighting = true
+show_line_numbers = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Input" type="LineEdit" parent="TabContainer/Serial Terminal"]
+margin_top = 510.0
+margin_right = 967.0
+margin_bottom = 534.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SendButton" type="Button" parent="TabContainer/Serial Terminal"]
+margin_left = 972.0
+margin_top = 512.0
+margin_right = 1015.0
+margin_bottom = 532.0
+text = "Send"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Log" type="Control" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="LogView" type="TextEdit" parent="TabContainer/Log"]
+margin_right = 1016.0
+margin_bottom = 530.0
+readonly = true
+show_line_numbers = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
